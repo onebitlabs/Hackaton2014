@@ -1,7 +1,7 @@
 var menuState = {
     create: function () {
         game.add.image(0, 0, 'background');
-        var nameLabel = game.add.text(game.world.centerX, -50, 'Super Coin Box', {
+        var nameLabel = game.add.text(game.world.centerX, -50, 'Pedro en Domingo', {
             font: '70px Geo',
             fill: '#ffffff'
         });

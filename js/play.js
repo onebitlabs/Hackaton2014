@@ -1,14 +1,14 @@
 var playState = {
     create: function () {
         this.cursor = game.input.keyboard.createCursorKeys();
-        game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,
-Phaser.Keyboard.DOWN, Phaser.Keyboard.LEFT,
-Phaser.Keyboard.RIGHT]);
+        game.input.keyboard.addKeyCapture([Phaser.Keyboard.UP,Phaser.Keyboard.DOWN, Phaser.Keyboard.LEFT,Phaser.Keyboard.RIGHT]);
         this.wasd = {
             up: game.input.keyboard.addKey(Phaser.Keyboard.W),
+            down: game.input.keyboard.addKey(Phaser.Keyboard.S),
             left: game.input.keyboard.addKey(Phaser.Keyboard.A),
             right: game.input.keyboard.addKey(Phaser.Keyboard.D)
         };
+        this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         game.global.score = 0;
         this.createWorld();
         if (!game.device.desktop) {
@@ -18,9 +18,9 @@ Phaser.Keyboard.RIGHT]);
             'player');
         game.physics.arcade.enable(this.player);
         this.player.anchor.setTo(0.5, 0.5);
-        this.player.body.gravity.y = 500;
-        this.player.animations.add('right', [1, 2], 8);
-        this.player.animations.add('left', [3, 4], 8);
+        this.player.body.gravity.y = 0;
+        //this.player.animations.add('right', [1, 2], 8);
+        //this.player.animations.add('left', [3, 4], 8);
         this.enemies = game.add.group();
         this.enemies.enableBody = true;
         this.enemies.createMultiple(10, 'enemy');
@@ -52,38 +52,49 @@ Phaser.Keyboard.RIGHT]);
             this.playerDie();
         }
         this.movePlayer();
-        if (this.nextEnemy < game.time.now) {
-            var start = 4000,
-                end = 1000,
-                score = 100;
-            var delay = Math.max(start -
-                (start - end) * game.global.score / score, end);
-            this.addEnemy();
-            this.nextEnemy = game.time.now + delay;
-        }
+//        if (this.nextEnemy < game.time.now) {
+//            var start = 4000,
+//                end = 1000,
+//                score = 100;
+//            var delay = Math.max(start -
+//                (start - end) * game.global.score / score, end);
+//            this.addEnemy();
+//            this.nextEnemy = game.time.now + delay;
+//        }
     },
     movePlayer: function () {
+
+        this.player.body.velocity.x = 0;
+		this.player.body.velocity.y = 0;
+        
+        var speed = 230;
+        
         if (this.cursor.left.isDown || this.wasd.left.isDown || this.moveLeft) {
-            this.player.body.velocity.x = -200;
-            this.player.animations.play('left');
+            if (this.tween) this.player.body.velocity.x = -50;
+        	else this.player.body.velocity.x = -speed;
+            //this.player.animations.play('left');
         } else if (this.cursor.right.isDown || this.wasd.right.isDown || this.moveRight) {
-            this.player.body.velocity.x = 200;
-            this.player.animations.play('right');
+            if (this.tween) this.player.body.velocity.x = 50;
+        	else this.player.body.velocity.x = speed;
+            //this.player.animations.play('right');
+        } else if (this.cursor.up.isDown || this.wasd.up.isDown) {
+            if (this.tween) this.player.body.velocity.y = -50;
+        	else this.player.body.velocity.y = -speed;
+        } else if (this.cursor.down.isDown || this.wasd.down.isDown){
+            if (this.tween) this.player.body.velocity.y = 50;
+        	else this.player.body.velocity.y = speed;
         } else {
             this.player.body.velocity.x = 0;
             this.player.animations.stop();
             this.player.frame = 0;
+            isMoving = false;
         }
-        if (this.cursor.up.isDown || this.wasd.up.isDown) {
-            this.jumpPlayer();
-        }
-    },
-    jumpPlayer: function () {
-        if (this.player.body.onFloor()) {
-            this.jumpSound.play();
-            this.player.body.velocity.y = -320;
+        
+        if(this.spaceKey.isDown){
+            console.warn('activate');
         }
     },
+
     addEnemy: function () {
         var enemy = this.enemies.getFirstDead();
         if (!enemy) {
