@@ -1,6 +1,8 @@
 var playState = {
 
     create: function () {
+        //illimani
+        //game.add.image(0, 0, 'illimani');
         this.tileHits1 = [];
         this.tileHits2 = [];
         this.tileHits3 = [];
@@ -34,7 +36,7 @@ var playState = {
         this.line7 = new Phaser.Line();
         this.line8 = new Phaser.Line();
 
-        this.createWorld();
+        this.createWorld('map');
         if (!game.device.desktop) {
             this.addMobileInputs();
         }
@@ -285,7 +287,7 @@ var playState = {
         //console.warn(this.Gcounter);
         if(this.Gcounter > this.winLvl[lvl])
         {
-            console.warn('wiiin');
+            this.createWorld('map3');
         }
         else{
             this.playerDie();
@@ -431,8 +433,8 @@ var playState = {
         game.state.start('dead');
     },
 
-    createWorld: function () {
-        this.map = game.add.tilemap('map');
+    createWorld: function (theMap) {
+        this.map = game.add.tilemap(theMap);
         this.map.addTilesetImage('tileset');
         this.layer = this.map.createLayer('Tile Layer 1');
         this.layer.resizeWorld();

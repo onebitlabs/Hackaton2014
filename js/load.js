@@ -14,6 +14,7 @@ var loadState = {
         game.load.image('pixel', 'assets/pixel.png');
         game.load.image('background', 'assets/background.jpg');
         game.load.image('backgroundStart', 'assets/backgroundStart.jpg');
+        //game.load.image('illimani', 'assets/illimani.jpg');
         game.load.spritesheet('mute', 'assets/muteButton.png', 28, 22);
         game.load.image('jumpButton', 'assets/jumpButton.png');
         game.load.image('rightButton', 'assets/rightButton.png');
@@ -23,8 +24,8 @@ var loadState = {
         game.load.audio('backMusic', 'assets/cholaBandida.mp3');
         game.load.audio('dead', ['assets/dead.ogg', 'assets/dead.mp3']);
         this.load.image('tileset', 'assets/tileset.png');
-        this.load.tilemap('map', 'assets/map.json', null,
-            Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map3', 'assets/map3.json', null,Phaser.Tilemap.TILED_JSON);
+        this.load.tilemap('map', 'assets/map.json', null,Phaser.Tilemap.TILED_JSON);
     },
     create: function () {
         game.state.start('menu');
