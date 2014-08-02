@@ -1,8 +1,8 @@
-var playState = {
+var playState2 = {
 
     create: function () {
         //illimani
-
+        //game.add.image(0, 0, 'illimani');
         this.tileHits1 = [];
         this.tileHits2 = [];
         this.tileHits3 = [];
@@ -25,7 +25,7 @@ var playState = {
         };
         this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(this.checkLives, this); //this.burnSound.play();
-        game.global.movesLeft = [5];
+        game.global.movesLeft = [4];
         this.winLvl = [59];
         this.line1 = new Phaser.Line();
         this.line2 = new Phaser.Line();
@@ -36,7 +36,7 @@ var playState = {
         this.line7 = new Phaser.Line();
         this.line8 = new Phaser.Line();
 
-        this.createWorld('map01');
+        this.createWorld('map');
         if (!game.device.desktop) {
             this.addMobileInputs();
         }
@@ -72,7 +72,6 @@ var playState = {
         this.backMusic.loop = true;
         this.backMusic.play();
         this.nextEnemy = 0;
-
         //game.stage.backgroundColor = '#ecf0f1';
     },
     update: function () {
@@ -278,9 +277,7 @@ var playState = {
     checkDebugTiles: function (lvl) {
         //console.warn(this.Gcounter);
         if (this.Gcounter > this.winLvl[lvl]) {
-            //this.createWorld('map3');
-            this.backMusic.stop();
-            game.state.start('play2');
+            //this.createWorld('map');
         } else {
             this.playerDie();
         }
@@ -374,13 +371,10 @@ var playState = {
     },
 
     createWorld: function (theMap) {
-        game.add.image(0, 0, 'illimani');
-        this.map = game.add.tilemap('map01');
+        this.map = game.add.tilemap(theMap);
         this.map.addTilesetImage('tileset');
         this.layer = this.map.createLayer('Tile Layer 1');
-        //this.layer.resizeWorld();
-
+        this.layer.resizeWorld();
         this.map.setCollision(1);
-        //this.layer.debug = true;
     }
 };

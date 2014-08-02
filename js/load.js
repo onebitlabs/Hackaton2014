@@ -26,6 +26,9 @@ var loadState = {
         game.load.image('tileset', 'assets/tileset.png');
         game.load.tilemap('map3', 'assets/map3.json', null,Phaser.Tilemap.TILED_JSON);
         game.load.tilemap('map', 'assets/map.json', null,Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map01', 'assets/map01.json', null,Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map02', 'assets/map02.json', null,Phaser.Tilemap.TILED_JSON);
+        game.load.tilemap('map03', 'assets/map02.json', null,Phaser.Tilemap.TILED_JSON);
     },
     create: function () {
         game.state.start('menu');

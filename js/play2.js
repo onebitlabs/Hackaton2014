@@ -25,8 +25,8 @@ var playState2 = {
         };
         this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(this.checkLives, this); //this.burnSound.play();
-        game.global.movesLeft = [4, 5, 3, 3, 3, 3];
-        this.winLvl = [59, 5, 3, 3, 3, 3];
+        game.global.movesLeft = [4];
+        this.winLvl = [59];
         this.line1 = new Phaser.Line();
         this.line2 = new Phaser.Line();
         this.line3 = new Phaser.Line();
@@ -277,7 +277,7 @@ var playState2 = {
     checkDebugTiles: function (lvl) {
         //console.warn(this.Gcounter);
         if (this.Gcounter > this.winLvl[lvl]) {
-            this.createWorld('map3');
+            this.createWorld('map03');
         } else {
             this.playerDie();
         }
@@ -371,7 +371,7 @@ var playState2 = {
     },
 
     createWorld: function (theMap) {
-        this.map = game.add.tilemap('map3');
+        this.map = game.add.tilemap(theMap);
         this.map.addTilesetImage('tileset');
         this.layer = this.map.createLayer('Tile Layer 1');
         this.layer.resizeWorld();
