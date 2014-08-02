@@ -22,7 +22,7 @@ var playState = {
             right: game.input.keyboard.addKey(Phaser.Keyboard.D)
         };
         this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
-        this.spaceKey.onDown.add(this.checkLives, this);
+        this.spaceKey.onDown.add(this.checkLives, this);//this.burnSound.play();
         game.global.movesLeft = [9, 5, 3, 3, 3, 3];
         this.winLvl = [59, 5, 3, 3, 3, 3];
         this.line1 = new Phaser.Line();
@@ -64,7 +64,7 @@ var playState = {
         this.emitter.setXSpeed(-150, 150);
         this.emitter.gravity = 0;
         this.jumpSound = game.add.audio('jump');
-        //this.coinSound = game.add.audio('coin');
+        this.burnSound = game.add.audio('burn');
         this.deadSound = game.add.audio('dead');
         this.backMusic = game.add.audio('backMusic');
         this.backMusic.loop=true;
@@ -146,11 +146,12 @@ var playState = {
             this.tileHits1 = this.layer.getRayCastTiles(this.line1, 4, true, false);
             if (this.tileHits1.length > 0) {
                 //  Just so we can visually see the tiles
-                this.fillLoop(-40, 0)
+                this.map.fill(2, this.layer.getTileX(this.player.x - 40), this.layer.getTileY(this.player.y), 1, 1);
+                this.fillLoop(-40, 0);
                 for (var i = 0; i < this.tileHits1.length; i++) {
-                    this.tileHits1[i].debug = true;
+                    //this.tileHits1[i].debug = true;
                 }
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ////
             this.line2.start.set(this.player.x, this.player.y);
@@ -158,12 +159,13 @@ var playState = {
             this.tileHits2 = this.layer.getRayCastTiles(this.line2, 4, true, false);
             if (this.tileHits2.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x + 40), this.layer.getTileY(this.player.y), 1, 1);
                 this.fillLoop(40, 0)
                 for (var i = 0; i < this.tileHits2.length; i++) {
-                    this.tileHits2[i].debug = true;
+                    //this.tileHits2[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             this.line3.start.set(this.player.x, this.player.y);
@@ -171,12 +173,13 @@ var playState = {
             this.tileHits3 = this.layer.getRayCastTiles(this.line3, 4, true, false);
             if (this.tileHits3.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x ), this.layer.getTileY(this.player.y-46), 1, 1);
                 this.fillLoop(0, -46)
                 for (var i = 0; i < this.tileHits3.length; i++) {
-                    this.tileHits3[i].debug = true;
+                    //this.tileHits3[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             this.line4.start.set(this.player.x, this.player.y);
@@ -184,12 +187,13 @@ var playState = {
             this.tileHits4 = this.layer.getRayCastTiles(this.line4, 4, true, false);
             if (this.tileHits4.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x ), this.layer.getTileY(this.player.y+46), 1, 1);
                 this.fillLoop(0, +46)
                 for (var i = 0; i < this.tileHits4.length; i++) {
-                    this.tileHits4[i].debug = true;
+                    //this.tileHits4[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             this.line5.start.set(this.player.x, this.player.y);
@@ -197,13 +201,14 @@ var playState = {
             this.tileHits5 = this.layer.getRayCastTiles(this.line5, 4, true, false);
             if (this.tileHits5.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x +40), this.layer.getTileY(this.player.y+46), 1, 1);
                 this.fillLoop(40, 0, 0, 46);
                 this.fillLoop(0, 46, 40, -46);
                 for (var i = 0; i < this.tileHits5.length; i++) {
-                    this.tileHits5[i].debug = true;
+                    //this.tileHits5[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             this.line6.start.set(this.player.x, this.player.y);
@@ -211,15 +216,15 @@ var playState = {
             this.tileHits6 = this.layer.getRayCastTiles(this.line6, 4, true, false);
             if (this.tileHits6.length > 0) {
                 //  Just so we can visually see the tiles
-
+                this.map.fill(2, this.layer.getTileX(this.player.x +40), this.layer.getTileY(this.player.y-46), 1, 1);
                 this.fillLoop(40, 0, 0, -46);
                 this.fillLoop(0, -46, 40, 0);
 
                 for (var i = 0; i < this.tileHits6.length; i++) {
-                    this.tileHits6[i].debug = true;
+                    //this.tileHits6[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             this.line7.start.set(this.player.x, this.player.y);
@@ -227,13 +232,14 @@ var playState = {
             this.tileHits7 = this.layer.getRayCastTiles(this.line7, 4, true, false);
             if (this.tileHits7.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x -40), this.layer.getTileY(this.player.y-46), 1, 1);
                 this.fillLoop(-40, 0, 0, -46);
                 this.fillLoop(0, -46, -40, 0);
                 for (var i = 0; i < this.tileHits7.length; i++) {
-                    this.tileHits7[i].debug = true;
+                    //this.tileHits7[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             ///
             ///
@@ -242,13 +248,14 @@ var playState = {
             this.tileHits8 = this.layer.getRayCastTiles(this.line8, 4, true, false);
             if (this.tileHits8.length > 0) {
                 //  Just so we can visually see the tiles
+                this.map.fill(2, this.layer.getTileX(this.player.x -40), this.layer.getTileY(this.player.y+46), 1, 1);
                 this.fillLoop(-40, 0, 0, 46);
                 this.fillLoop(0, 46, -40, 0);
                 for (var i = 0; i < this.tileHits8.length; i++) {
-                    this.tileHits8[i].debug = true;
+                    //this.tileHits8[i].debug = true;
                 }
 
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
 
         }
@@ -256,6 +263,7 @@ var playState = {
     },
     checkLives: function () {
         game.global.movesLeft[0]--;
+        this.burnSound.play();
         this.movesLabel.text = 'Movimientos Disponibles: ' + game.global.movesLeft[0];
         if (!game.global.movesLeft[0]) {
             this.checkDebugTiles(0);
@@ -293,9 +301,9 @@ var playState = {
             var tileHitsN = [];
             if (tileHitsN.length > 0) {
                 for (var i = 0; i < tileHitsN.length; i++) {
-                    tileHitsN[i].debug = false;
+                    //tileHitsN[i].debug = false;
                 }
-                this.layer.dirty = true;
+                //this.layer.dirty = true;
             }
             lineN.start.set(xsuma + this.player.x + (x1 * (io - 1)), ysuma + this.player.y + (y1 * (io - 1)));
             lineN.end.set(xsuma + this.player.x + (x1 * io), ysuma + this.player.y + (y1 * io));
@@ -304,8 +312,11 @@ var playState = {
 
                 for (var i = 0; i < tileHitsN.length; i++) {
                     if(!tileHitsN[i].debug){
-                        tileHitsN[i].debug = true;
+                        //tileHitsN[i].debug = true;
                         this.Gcounter++;
+                        this.map.fill(2, this.layer.getTileX(xsuma + this.player.x + (x1 * io)),
+                                        this.layer.getTileY(ysuma + this.player.y + (y1 * io)), 1, 1);
+
                     }
 
                 }
