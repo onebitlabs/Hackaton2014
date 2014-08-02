@@ -274,7 +274,7 @@ var playState = {
         this.player.x=game.world.centerY;
     },
     checkDebugTiles:function(lvl){
-        console.warn(this.Gcounter);
+        //console.warn(this.Gcounter);
         if(this.Gcounter > this.winLvl[lvl])
         {
             console.warn('wiiin');
@@ -417,11 +417,9 @@ var playState = {
         this.emitter.x = this.player.x;
         this.emitter.y = this.player.y;
         this.emitter.start(true, 600, null, 15);
-        game.time.events.add(1000, this.startMenu, this);
+        game.state.start('dead');
     },
-    startMenu: function () {
-        game.state.start('menu');
-    },
+
     createWorld: function () {
         this.map = game.add.tilemap('map');
         this.map.addTilesetImage('tileset');

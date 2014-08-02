@@ -1,6 +1,6 @@
 var menuState = {
     create: function () {
-        game.add.image(0, 0, 'background');
+        game.add.image(0, 0, 'backgroundStart');
         var nameLabel = game.add.text(game.world.centerX, -20, 'Enciende la Tea', {
             font: '70px Geo',
             fill: '#ffffff'
@@ -16,17 +16,17 @@ var menuState = {
         if (game.global.score > localStorage.getItem('bestScore')) {
             localStorage.setItem('bestScore', game.global.score);
         }
-        var text = 'score: ' + game.global.score + '\nbest score: ' +
-            localStorage.getItem('bestScore');
-        var scoreLabel = game.add.text(game.world.centerX, game.world.centerY,
-            text, {
-                font: '25px Arial',
-                fill: '#ffffff',
-                align: 'center'
-            });
-        scoreLabel.anchor.setTo(0.5, 0.5);
+//        var text = 'score: ' + game.global.score + '\nbest score: ' +
+//            localStorage.getItem('bestScore');
+//        var scoreLabel = game.add.text(game.world.centerX, game.world.centerY,
+//            text, {
+//                font: '25px Arial',
+//                fill: '#ffffff',
+//                align: 'center'
+//            });
+//        scoreLabel.anchor.setTo(0.5, 0.5);
         if (this.game.device.desktop) {
-            var text = 'press the up arrow key to start';
+            var text = 'apreta la flecha superior para iniciar';
         } else {
             var text = 'touch the screen to start';
         }
