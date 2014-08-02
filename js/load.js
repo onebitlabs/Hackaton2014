@@ -15,6 +15,7 @@ var loadState = {
         game.load.image('background', 'assets/background.jpg');
         game.load.image('backgroundStart', 'assets/backgroundStart.jpg');
         game.load.image('illimani', 'assets/illimani.jpg');
+        game.load.image('pedrito', 'assets/PedroFinal.png');
         game.load.spritesheet('mute', 'assets/muteButton.png', 28, 22);
         game.load.image('jumpButton', 'assets/jumpButton.png');
         game.load.image('rightButton', 'assets/rightButton.png');

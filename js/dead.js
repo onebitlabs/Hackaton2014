@@ -1,6 +1,7 @@
 var deadState ={
     create: function(){
         game.add.image(0, 0, 'background');
+        game.add.image(200,300,'pedrito');
         this.cursor = this.game.input.keyboard.createCursorKeys();
         var nameLabel = game.add.text(100, 100, 'Perdiste! Intenta otra vez!', {
             font: '70px Geo',
@@ -10,6 +11,7 @@ var deadState ={
             font: '40px Geo',
             fill: '#000000'
         });
+
     },
     update: function(){
         if (this.cursor.up.isDown || game.input.activePointer.isDown)
