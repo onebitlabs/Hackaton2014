@@ -21,6 +21,7 @@ var playState = {
             right: game.input.keyboard.addKey(Phaser.Keyboard.D)
         };
         this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
+        this.spaceKey.onDown.add(this.checkLives, this);
         game.global.movesLeft = [4, 5, 3, 3, 3, 3];
         this.line1 = new Phaser.Line();
         this.line2 = new Phaser.Line();
@@ -47,9 +48,9 @@ var playState = {
         this.enemies = game.add.group();
         this.enemies.enableBody = true;
         this.enemies.createMultiple(10, 'enemy');
-        this.coin = game.add.sprite(60, 140, 'coin');
-        game.physics.arcade.enable(this.coin);
-        this.coin.anchor.setTo(0.5, 0.5);
+//        this.coin = game.add.sprite(60, 140, 'coin');
+//        game.physics.arcade.enable(this.coin);
+//        this.coin.anchor.setTo(0.5, 0.5);
         this.movesLabel = game.add.text(30, 30, 'Movimientos Disponibles: ' + game.global.movesLeft[0], {
             font: '18px Arial',
             fill: '#ffffff'
@@ -60,8 +61,11 @@ var playState = {
         this.emitter.setXSpeed(-150, 150);
         this.emitter.gravity = 0;
         this.jumpSound = game.add.audio('jump');
-        this.coinSound = game.add.audio('coin');
+        //this.coinSound = game.add.audio('coin');
         this.deadSound = game.add.audio('dead');
+        this.backMusic = game.add.audio('backMusic');
+        this.backMusic.loop=true;
+        this.backMusic.play();
         this.nextEnemy = 0;
     },
     update: function () {
@@ -133,7 +137,6 @@ var playState = {
                     x: 1,
                     y: 1
                 }, 150).start();
-            this.checkLives();
             this.line1.start.set(this.player.x, this.player.y);
             this.line1.end.set(this.player.x - 40, this.player.y);
             this.tileHits1 = this.layer.getRayCastTiles(this.line1, 4, true, false);
@@ -323,58 +326,58 @@ var playState = {
         enemy.checkWorldBounds = true;
         enemy.outOfBoundsKill = true;
     },
-    takeCoin: function (player, coin) {
-        game.global.score += 5;
-        this.scoreLabel.text = 'score: ' + game.global.score;
-        this.updateCoinPosition();
-        this.coinSound.play();
-        game.add.tween(this.player.scale).to({
-            x: 1.3,
-            y: 1.3
-        }, 50)
-            .to({
-                x: 1,
-                y: 1
-            }, 150).start();
-        this.coin.scale.setTo(0, 0);
-        game.add.tween(this.coin.scale).to({
-            x: 1,
-            y: 1
-        }, 300).start();
-    },
-    updateCoinPosition: function () {
-        var coinPosition = [
-            {
-                x: 140,
-                y: 60
-            }, {
-                x: 360,
-                y: 60
-            },
-            {
-                x: 60,
-                y: 140
-            }, {
-                x: 440,
-                y: 140
-            },
-            {
-                x: 130,
-                y: 300
-            }, {
-                x: 370,
-                y: 300
-            }
-];
-        for (var i = 0; i < coinPosition.length; i++) {
-            if (coinPosition[i].x === this.coin.x) {
-                coinPosition.splice(i, 1);
-            }
-        }
-        var newPosition = coinPosition[game.rnd.integerInRange(0,
-            coinPosition.length - 1)];
-        this.coin.reset(newPosition.x, newPosition.y);
-    },
+//    takeCoin: function (player, coin) {
+//        game.global.score += 5;
+//        this.scoreLabel.text = 'score: ' + game.global.score;
+//        this.updateCoinPosition();
+//        this.coinSound.play();
+//        game.add.tween(this.player.scale).to({
+//            x: 1.3,
+//            y: 1.3
+//        }, 50)
+//            .to({
+//                x: 1,
+//                y: 1
+//            }, 150).start();
+//        this.coin.scale.setTo(0, 0);
+//        game.add.tween(this.coin.scale).to({
+//            x: 1,
+//            y: 1
+//        }, 300).start();
+//    },
+//    updateCoinPosition: function () {
+//        var coinPosition = [
+//            {
+//                x: 140,
+//                y: 60
+//            }, {
+//                x: 360,
+//                y: 60
+//            },
+//            {
+//                x: 60,
+//                y: 140
+//            }, {
+//                x: 440,
+//                y: 140
+//            },
+//            {
+//                x: 130,
+//                y: 300
+//            }, {
+//                x: 370,
+//                y: 300
+//            }
+//];
+//        for (var i = 0; i < coinPosition.length; i++) {
+//            if (coinPosition[i].x === this.coin.x) {
+//                coinPosition.splice(i, 1);
+//            }
+//        }
+//        var newPosition = coinPosition[game.rnd.integerInRange(0,
+//            coinPosition.length - 1)];
+//        this.coin.reset(newPosition.x, newPosition.y);
+//    },
     playerDie: function () {
         if (!this.player.alive) {
             return;
