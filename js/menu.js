@@ -1,13 +1,13 @@
 var menuState = {
     create: function () {
         game.add.image(0, 0, 'background');
-        var nameLabel = game.add.text(game.world.centerX, -50, 'Pedro en Domingo', {
+        var nameLabel = game.add.text(game.world.centerX, -20, 'Enciende la Tea', {
             font: '70px Geo',
             fill: '#ffffff'
         });
         nameLabel.anchor.setTo(0.5, 0.5);
         game.add.tween(nameLabel).to({
-            y: 80
+            y: 150
         }, 1000)
             .easing(Phaser.Easing.Bounce.Out).start();
         if (!localStorage.getItem('bestScore')) {

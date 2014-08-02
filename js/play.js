@@ -9,7 +9,8 @@ var playState = {
         this.tileHits6 = [];
         this.tileHits7 = [];
         this.tileHits8 = [];
-
+        this.tileHitsG = [];
+        this.Gcounter=0;
 
         game.physics.startSystem(Phaser.Physics.ARCADE);
         this.cursor = game.input.keyboard.createCursorKeys();
@@ -22,7 +23,8 @@ var playState = {
         };
         this.spaceKey = game.input.keyboard.addKey(Phaser.Keyboard.SPACEBAR);
         this.spaceKey.onDown.add(this.checkLives, this);
-        game.global.movesLeft = [4, 5, 3, 3, 3, 3];
+        game.global.movesLeft = [9, 5, 3, 3, 3, 3];
+        this.winLvl = [59, 5, 3, 3, 3, 3];
         this.line1 = new Phaser.Line();
         this.line2 = new Phaser.Line();
         this.line3 = new Phaser.Line();
@@ -38,6 +40,7 @@ var playState = {
         }
         this.player = game.add.sprite(game.world.centerX, game.world.centerY,
             'player');
+        //this.initWallDebug();
         game.physics.arcade.enable(this.player);
         this.player.anchor.setTo(0.5, 0.5);
         this.player.body.gravity.y = 0;
@@ -51,7 +54,7 @@ var playState = {
 //        this.coin = game.add.sprite(60, 140, 'coin');
 //        game.physics.arcade.enable(this.coin);
 //        this.coin.anchor.setTo(0.5, 0.5);
-        this.movesLabel = game.add.text(30, 30, 'Movimientos Disponibles: ' + game.global.movesLeft[0], {
+        this.movesLabel = game.add.text(40, 20, 'Movimientos Disponibles: ' + game.global.movesLeft[0], {
             font: '18px Arial',
             fill: '#ffffff'
         });
@@ -67,6 +70,7 @@ var playState = {
         this.backMusic.loop=true;
         this.backMusic.play();
         this.nextEnemy = 0;
+        //game.stage.backgroundColor = '#ecf0f1';
     },
     update: function () {
         game.physics.arcade.overlap(this.player, this.enemies, this.playerDie,
@@ -145,9 +149,7 @@ var playState = {
                 this.fillLoop(-40, 0)
                 for (var i = 0; i < this.tileHits1.length; i++) {
                     this.tileHits1[i].debug = true;
-                    console.warn(1);
                 }
-
                 this.layer.dirty = true;
             }
             ////
@@ -196,7 +198,7 @@ var playState = {
             if (this.tileHits5.length > 0) {
                 //  Just so we can visually see the tiles
                 this.fillLoop(40, 0, 0, 46);
-                this.fillLoop(0, -46, 0, -46);
+                this.fillLoop(0, 46, 40, -46);
                 for (var i = 0; i < this.tileHits5.length; i++) {
                     this.tileHits5[i].debug = true;
                 }
@@ -256,6 +258,28 @@ var playState = {
         game.global.movesLeft[0]--;
         this.movesLabel.text = 'Movimientos Disponibles: ' + game.global.movesLeft[0];
         if (!game.global.movesLeft[0]) {
+            this.checkDebugTiles(0);
+        }
+    },
+    initWallDebug: function(){
+        this.player.x=20;
+        this.player.y=23;
+        console.warn(this.map);
+        console.warn(this.tilemap);
+        var a = this.map.getTile(20,23);
+        a.debug=true;
+        this.fillLoop(40,0);
+        this.fillLoop(0,46);
+        this.player.x=game.world.centerX;
+        this.player.x=game.world.centerY;
+    },
+    checkDebugTiles:function(lvl){
+        console.warn(this.Gcounter);
+        if(this.Gcounter > this.winLvl[lvl])
+        {
+            console.warn('wiiin');
+        }
+        else{
             this.playerDie();
         }
     },
@@ -277,8 +301,13 @@ var playState = {
             lineN.end.set(xsuma + this.player.x + (x1 * io), ysuma + this.player.y + (y1 * io));
             tileHitsN = this.layer.getRayCastTiles(lineN, 4, true, false);
             if (tileHitsN.length > 1) {
+
                 for (var i = 0; i < tileHitsN.length; i++) {
-                    tileHitsN[i].debug = true;
+                    if(!tileHitsN[i].debug){
+                        tileHitsN[i].debug = true;
+                        this.Gcounter++;
+                    }
+
                 }
 
                 this.layer.dirty = true;
@@ -384,6 +413,7 @@ var playState = {
         }
         this.player.kill();
         this.deadSound.play();
+        this.backMusic.stop();
         this.emitter.x = this.player.x;
         this.emitter.y = this.player.y;
         this.emitter.start(true, 600, null, 15);
