@@ -2,7 +2,7 @@ var playState = {
 
     create: function () {
         //illimani
-
+        game.add.image(0, 0, 'illimani');
         this.tileHits1 = [];
         this.tileHits2 = [];
         this.tileHits3 = [];

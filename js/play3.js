@@ -1,4 +1,4 @@
-var playState2 = {
+var playState3 = {
 
     create: function () {
         //illimani
@@ -36,7 +36,7 @@ var playState2 = {
         this.line7 = new Phaser.Line();
         this.line8 = new Phaser.Line();
 
-        this.createWorld('map03');
+        this.createWorld('map');
         if (!game.device.desktop) {
             this.addMobileInputs();
         }
@@ -277,7 +277,7 @@ var playState2 = {
     checkDebugTiles: function (lvl) {
         //console.warn(this.Gcounter);
         if (this.Gcounter > this.winLvl[lvl]) {
-            this.createWorld('map');
+            this.createWorld('map02');
         } else {
             this.playerDie();
         }
