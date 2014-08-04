@@ -276,7 +276,14 @@ var playState2 = {
         this.player.x = game.world.centerY;
     },
     checkDebugTiles: function (lvl) {
-        //console.warn(this.Gcounter);
+        if (this.Gcounter > this.winLvl[lvl]) {
+            //this.createWorld('map3');
+            this.backMusic.stop();
+            this.movesLabel.text = 'Ganaste, espera noticias para mas niveles!' ;
+            //game.state.start('play2');
+        } else {
+            this.playerDie();
+        }
 
     },
     fillLoop: function (x1, y1, xsuma, ysuma) {
